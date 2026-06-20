@@ -1,133 +1,254 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RoyalBet88 | Live Sportsbook</title>
-  <link rel="stylesheet" href="../css/global-theme.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoyalBet88 - Sportsbook</title>
+    <style>
+        :root {
+            --bg-color: #1a1d24;
+            --card-bg: #222630;
+            --accent-color: #ffb703;
+            --text-color: #ffffff;
+            --text-muted: #9ba3b2;
+            --danger-color: #e63946;
+            --success-color: #2a9d8f;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #2d3342;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        nav a:hover, nav a.active {
+            color: var(--accent-color);
+        }
+        .main-container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .page-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        .match-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-muted);
+            border-bottom: 1px solid #2d3342;
+            padding-bottom: 8px;
+        }
+        .match-teams {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+        .vs {
+            color: var(--accent-color);
+            font-size: 14px;
+        }
+        .odds-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .odd-btn {
+            background-color: #1a1d24;
+            border: 1px solid #3a4253;
+            color: var(--text-color);
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .odd-btn:hover:not(:disabled) {
+            background-color: #2d3342;
+            border-color: var(--accent-color);
+        }
+        .odd-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .odd-val {
+            color: var(--accent-color);
+        }
+        .odd-btn:disabled {
+            background-color: #15171c;
+            border-color: #222630;
+            color: #4f5666;
+            cursor: not-allowed;
+        }
+        .odd-btn:disabled .odd-val {
+            color: #4f5666;
+        }
+        .status-badge {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-open { background-color: rgba(42, 157, 143, 0.2); color: var(--success-color); }
+        .status-locked { background-color: rgba(230, 57, 74, 0.2); color: var(--danger-color); }
+    </style>
 </head>
-<body class="rtl">
+<body>
 
-  <div class="sports-layout">
-    
-    <!-- סרגל קטגוריות צידי -->
-    <aside class="sports-sidebar">
-      <div class="sidebar-section-title">מונדיאל 2026</div>
-      <div class="sport-menu-item active" onclick="filterBySport('all', this)"><span>🌍 כל המשחקים</span></div>
-      <div class="sport-menu-item" onclick="filterBySport('football', this)"><span>⚽ כדורגל</span></div>
-      <div class="sport-menu-item" onclick="filterBySport('basketball', this)"><span>🏀 כדורסל</span></div>
-      <div class="sport-menu-item" onclick="filterBySport('tennis', this)"><span>🎾 טניס</span></div>
-    </aside>
+    <header>
+        <div class="logo">RoyalBet88</div>
+        <nav>
+            <a href="index.html" data-key="nav_home">קזינו</a>
+            <a href="sports.html" class="active" data-key="nav_sports">ספורט</a>
+            <a href="login.html" data-key="nav_login">התחברות</a>
+        </nav>
+    </header>
 
-    <!-- אזור המשחקים המרכזי -->
-    <main class="sports-main-content">
-      <div class="sport-header sport-header-clean">
-        <div class="league-title" id="current-sport-title">⚽ LIVE & UPCOMING MATCHES</div>
-      </div>
-      <div class="grid-container sports-grid-reset" id="matches-grid">
-        <div class="status-msg" id="status-text">טוען משחקים חיים...</div>
-      </div>
+    <main class="main-container">
+        <div class="page-title" data-key="sports_title">לוח משחקי מונדיאל</div>
+        
+        <div id="fixtures-container">
+            <p data-key="loading">טוען משחקים מעודכנים...</p>
+        </div>
     </main>
 
-  </div>
+    <script>
+        const translations = {
+            he: {
+                nav_home: "קזינו", nav_sports: "ספורט", nav_login: "התחברות",
+                sports_title: "לוח משחקי מונדיאל", loading: "טוען משחקים מעודכנים...",
+                no_games: "אין משחקים זמינים כרגע.", status_open: "פתוח להימורים",
+                status_locked: "נעול - המשחק החל", home_win: "בית", draw: "תיקו", away_win: "חוץ"
+            },
+            en: {
+                nav_home: "Casino", nav_sports: "Sportsbook", nav_login: "Login",
+                sports_title: "World Cup Matches", loading: "Loading updated matches...",
+                no_games: "No matches available at the moment.", status_open: "Open",
+                status_locked: "Locked - Match Started", home_win: "Home", draw: "Draw", away_win: "Away"
+            }
+        };
 
-  <script>
-    let currentFilteredSport = "all";
+        const currentLang = localStorage.getItem('selectedLang') || 'he';
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = (currentLang === 'he') ? 'rtl' : 'ltr';
 
-    // הוספת המילה async בראשה של הפונקציה פותרת את שגיאת ה-SyntaxError לצמיתות!
-    async function loadLiveMatches() {
-      const grid = document.getElementById('matches-grid');
-      if (!grid) return;
-      
-      grid.innerHTML = '<div class="status-msg">טוען משחקים חיים...</div>';
+        async function loadFixtures() {
+            const container = document.getElementById('fixtures-container');
+            const t = translations[currentLang];
+            
+            try {
+                const p1 = 'https';
+                const p2 = 'addapi.royalbet88.live';
+                const response = await fetch(p1 + '://' + p2 + '/api/fixtures/publicList');
+                if (!response.ok) throw new Error("Network error");
+                
+                const resData = await response.json();
+                const matches = resData.data || [];
+                
+                if (matches.length === 0) {
+                    container.innerHTML = "<p>" + t.no_games + "</p>";
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                matches.forEach(match => {
+                    const matchTime = new Date(match.commence_time);
+                    const isLocked = new Date() >= matchTime;
+                    
+                    const statusText = isLocked ? t.status_locked : t.status_open;
+                    const statusClass = isLocked ? 'status-locked' : 'status-open';
+                    const disabledAttr = isLocked ? 'disabled' : '';
+                    
+                    const formattedDate = matchTime.toLocaleDateString(currentLang === 'he' ? 'he-IL' : 'en-US', {
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                    });
 
-      try {
-        const apiHost = 'addapi.' + window.location.hostname.replace('www.', '');
-        const API_URL = 'https://' + apiHost + '/api/fixtures';
-
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error('Secure feed connection issue');
-        
-        const json = await response.json();
-        const matches = Array.isArray(json) ? json : (json.data || []);
-
-        if (matches.length === 0) {
-          grid.innerHTML = '<div class="status-msg">אין משחקים פעילים כעת בלוח.</div>';
-          return;
+                    const cardHtml = `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span>📅 ${formattedDate}</span>
+                                <span class="status-badge ${statusClass}">${statusText}</span>
+                            </div>
+                            <div class="match-teams">
+                                <div>${match.home_team}</div>
+                                <div class="vs">VS</div>
+                                <div>${match.away_team}</div>
+                            </div>
+                            <div class="odds-row">
+                                <button class="odd-btn" ${disabledAttr} onclick="placeBet('${match.fixture_id}', '1', ${match.odds_home})">
+                                    <span class="odd-label">${t.home_win} (1)</span>
+                                    <span class="odd-val">${Number(match.odds_home).toFixed(2)}</span>
+                                </button>
+                                <button class="odd-btn" ${disabledAttr} onclick="placeBet('${match.fixture_id}', 'X', ${match.odds_draw})">
+                                    <span class="odd-label">${t.draw} (X)</span>
+                                    <span class="odd-val">${Number(match.odds_draw).toFixed(2)}</span>
+                                </button>
+                                <button class="odd-btn" ${disabledAttr} onclick="placeBet('${match.fixture_id}', '2', ${match.odds_away})">
+                                    <span class="odd-label">${t.away_win} (2)</span>
+                                    <span class="odd-val">${Number(match.odds_away).toFixed(2)}</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHtml;
+                });
+                
+            } catch (error) {
+                container.innerHTML = '<p style="color:var(--danger-color)">Error loading sports data.</p>';
+            }
         }
 
-        grid.innerHTML = ''; 
+        function placeBet(fixtureId, choice, oddValue) {
+            alert("fixtureId: " + fixtureId + "\nchoice: " + choice + "\noddValue: " + oddValue);
+        }
 
-        matches.forEach(function(match) {
-          const data = match.attributes || match;
-          
-          const homeTeam = data.home_team || 'Home Team';
-          const awayTeam = data.away_team || 'Away Team';
-          const homeOdds = data.odds_home || '1.00';
-          const drawOdds = data.odds_draw || '1.00';
-          const awayOdds = data.odds_away || '1.00';
-          const matchStatus = data.status || 'Live';
-          const leagueName = data.league || 'מונדיאל 2026';
-          
-          let displayTime = 'Live';
-          const rawTime = data.commence_time || data.time;
-          if (rawTime) {
-            try {
-              const dateObj = new Date(rawTime);
-              const day = String(dateObj.getDate()).padStart(2, '0');
-              const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-              const hours = String(dateObj.getHours()).padStart(2, '0');
-              const minutes = String(dateObj.getMinutes()).padStart(2, '0');
-              displayTime = day + '/' + month + ' - ' + hours + ':' + minutes;
-            } catch (e) {
-              displayTime = rawTime;
-            }
-          }
-
-                  // שורה 87 - שימוש בגרש נטוי (Backtick) פותר את קריסת ה-HTML לחלוטין!
-          grid.innerHTML += `
-            <div class="item-card">
-              <div class="match-meta">
-                <span style="font-weight: 800; color: var(--gold-accent);">🏆 ${leagueName}</span>
-                <span style="color: #ff3b30; font-weight: 800;">● ${displayTime} (${matchStatus})</span>
-              </div>
-              <div class="teams-container" style="margin: 10px 0;">
-                <div class="team-row" style="font-size: 15px; font-weight: 800;">⚽ ${homeTeam}</div>
-                <div class="team-row" style="font-size: 15px; font-weight: 800;">⚽ ${awayTeam}</div>
-              </div>
-              <div class="odds-row" style="grid-template-columns: repeat(3, 1fr);">
-                <div class="odds-btn" onclick="openPlayerWidget(event)"><span class="odds-label">1</span><span class="odds-value">${Number(homeOdds).toFixed(2)}</span></div>
-                <div class="odds-btn" onclick="openPlayerWidget(event)"><span class="odds-label">X</span><span class="odds-value">${Number(drawOdds).toFixed(2)}</span></div>
-                <div class="odds-btn" onclick="openPlayerWidget(event)"><span class="odds-label">2</span><span class="odds-value">${Number(awayOdds).toFixed(2)}</span></div>
-              </div>
-            </div>
-          `; // <-- תוקן: סגירה נקייה עם גרש נטוי, נקודה פסיק, ורק אז סגירת הלולאה של ה-forEach
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+            loadFixtures();
         });
-
-      } catch (error) {
-        console.error('Error loading fixtures:', error);
-        grid.innerHTML = '<div class="status-msg" style="color: var(--text-muted);">חיבור מאובטח פעיל. ממתין למשחקים משרת הליגה...</div>';
-      }
-    }
-
-    function updateSportHeaderTitle(lang) {
-      const headerTitle = document.getElementById('current-sport-title');
-      if (headerTitle) {
-        headerTitle.innerText = lang === 'he' ? '⚽ משחקי מונדיאל 2026 - חי וקרוב' : '⚽ FIFA WORLD CUP 2026 - LIVE';
-      }
-    }
-
-    function filterBySport(category, element) {
-      currentFilteredSport = category;
-      document.querySelectorAll('.sport-menu-item').forEach(function(item) { item.classList.remove('active'); });
-      element.classList.add('active');
-      loadLiveMatches();
-    }
-
-    document.addEventListener('DOMContentLoaded', loadLiveMatches);
-  </script>
-
-  <script src="../js/global-app.js"></script>
+    </script>
 </body>
 </html>
-
