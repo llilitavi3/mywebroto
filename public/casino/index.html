@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoyalBet88 | Luxury Live Casino</title>
+  <!-- חיבור לקובץ העיצוב הגלובלי המאוחד שנמצא תיקייה אחת למעלה -->
+  <link rel="stylesheet" href="../css/global-theme.css">
+</head>
+<body class="rtl">
+
+  <!-- סרגל ניווט עליון גלובלי עם המבורגר -->
+  <header class="global-header">
+    <div class="nav-container">
+      
+      <!-- כפתור המבורגר למובייל (☰) -->
+      <button class="hamburger-toggle" onclick="toggleSidebar(event)">☰</button>
+
+      <!-- לוגו האתר -->
+      <a href="/" class="brand-logo">ROYAL<span>BET88</span></a>
+      
+      <!-- תפריט הניווט הראשי למחשב (מוסתר במובייל אוטומטית) -->
+      <nav class="nav-menu">
+        <a href="/" class="nav-link">
+          <span class="lang-text" data-key="nav_home">דף הבית</span>
+        </a>
+        <a href="/sport/" class="nav-link">
+          <span class="lang-text" data-key="nav_sports">ספורט</span>
+        </a>
+        <a href="/casino/" class="nav-link active">
+          <span class="lang-text" data-key="nav_casino">קזינו</span>
+        </a>
+      </nav>
+
+      <!-- אזור פעולות: בורר שפות וכפתור כניסה -->
+      <div class="header-actions">
+        <div class="language-selector">
+          <button class="lang-btn" onclick="toggleLangDropdown(event)">
+            <span id="current-lang-flag">🇮🇱</span>
+            <span id="current-lang-name">עברית</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <div class="lang-option" onclick="changeLanguage('he', '🇮🇱', 'עברית')">🇮🇱 עברית</div>
+            <div class="lang-option" onclick="changeLanguage('en', '🇺🇸', 'English')">🇺🇸 English</div>
+            <div class="lang-option" onclick="changeLanguage('es', '🇪🇸', 'Español')">🇪🇸 Español</div>
+            <div class="lang-option" onclick="changeLanguage('ru', '🇷🇺', 'Русский')">🇷🇺 Русский</div>
+            <div class="lang-option" onclick="changeLanguage('ar', '🇦🇪', 'العربية')">🇦🇪 العربية</div>
+          </div>
+        </div>
+        <button class="btn-login lang-text" data-key="btn_login" onclick="openLoginPopup()">התחברות</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- מסך החשכה שחור מאחורי תפריט המבורגר במובייל -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- רכיב תפריט המבורגר צידי נסתר (Sidebar) למובייל -->
+  <div class="mobile-sidebar" id="mobile-sidebar">
+    <a href="/" class="sidebar-link">🏠 <span class="lang-text" data-key="nav_home">דף הבית</span></a>
+    <a href="/sport/" class="sidebar-link">⚽ <span class="lang-text" data-key="nav_sports">ספורט</span></a>
+    <a href="/casino/" class="sidebar-link active">🎰 <span class="lang-text" data-key="nav_casino">קזינו</span></a>
+    <a href="/promotions/" class="sidebar-link">🎁 <span class="lang-text" data-key="nav_promo">מבצעים</span></a>
+    <a href="/support/" class="sidebar-link">🎧 <span class="lang-text" data-key="nav_support">תמיכה</span></a>
+  </div>
+
+  <!-- כותרת הלובי קזינו -->
+  <div class="casino-header">
+    <div class="lobby-title lang-text" data-key="lobby_title">🎰 קזינו חי וסלוטים פרימיום</div>
+  </div>
+
+  <!-- מכולת המשחקים דינמית -->
+  <main class="grid-container" id="casino-grid">
+    <div class="status-msg" id="status-text">Connecting to Live Lobby...</div>
+  </main>
+    </main>
+   <script>
+    // --- מנגנון משיכת משחקי הקזינו מתוך ה-Strapi (חובה להשאיר בדף זה!) ---
+    async function loadCasinoGames() {
+      const grid = document.getElementById('casino-grid');
+      const currentLang = localStorage.getItem('royal_lang') || 'he';
+      
+      grid.innerHTML = `<div class="status-msg" id="status-text">${translations[currentLang]['loading']}</div>`;
+      const API_URL = 'https://royalbet88.live'; [main.js]
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) { showFallbackGames(); return; }
+        
+        const json = await response.json();
+        const games = Array.isArray(json) ? json : (json.data || []);
+        if (games.length === 0) { showFallbackGames(); return; }
+
+        grid.innerHTML = '';
+
+        games.forEach(game => {
+          const data = game.attributes || game;
+          const title = data.title || data.name || 'Premium Game';
+          const provider = data.provider || 'Pragmatic Play';
+          const thumbnail = data.image_url || data.thumbnail || '🎰';
+          grid.innerHTML += createGameCard(title, provider, thumbnail);
+        });
+      } catch (error) {
+        showFallbackGames();
+      }
+    }
+
+    function createGameCard(title, provider, thumbnail) {
+      const visual = thumbnail.startsWith('http') ? `<img src="${thumbnail}" alt="${title}">` : thumbnail;
+      const currentLang = localStorage.getItem('royal_lang') || 'he';
+      const playText = translations[currentLang]['play_now'] || 'שחק עכשיו';
+
+      return `
+        <div class="game-card">
+          <div class="game-thumbnail">${visual}</div>
+          <div class="game-info">
+            <span class="game-title">${title}</span>
+            <span class="game-provider">${provider}</span>
+            <button class="btn-login btn-play-game" style="font-size:11px; padding:6px; margin-top:4px;" onclick="openLoginPopup()">${playText}</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function showFallbackGames() {
+      const grid = document.getElementById('casino-grid');
+      grid.innerHTML = '';
+
+      const fallbacks = [
+        { title: 'Live Roulette', provider: 'Evolution Gaming', thumb: '🔮' },
+        { title: 'Royal Blackjack', provider: 'Pragmatic Play Live', thumb: '🃏' },
+        { title: 'Gates of Olympus', provider: 'Pragmatic Play', thumb: '⚡' },
+        { title: 'Sweet Bonanza', provider: 'Pragmatic Play', thumb: '🍬' },
+        { title: 'Crazy Time', provider: 'Evolution Gaming', thumb: '🎡' },
+        { title: 'Book of Dead', provider: 'Play\'n GO', thumb: '👑' }
+      ];
+
+      fallbacks.forEach(game => {
+        grid.innerHTML += createGameCard(game.title, game.provider, game.thumb);
+      });
+    }
+
+    // הפעלת משיכת משחקי הקזינו מיד בעליית הדף
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCasinoGames();
+    });
+  </script>
+
+  <!-- חיבור תקין ומקצועי לקובץ הלוגיקה המרכזי והנקי שלכם -->
+  <script src="../js/global-app.js"></script>
+</body>
+</html>
