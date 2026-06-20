@@ -45,11 +45,6 @@ function injectGlobalUI() {
   const headerActions = document.createElement('div');
   headerActions.className = 'header-actions';
 
-  const hiddenTranslate = document.createElement('div');
-  hiddenTranslate.id = 'google_translate_element';
-  hiddenTranslate.style.display = 'none';
-  headerActions.appendChild(hiddenTranslate);
-
   const langSelector = document.createElement('div');
   langSelector.className = 'language-selector';
 
