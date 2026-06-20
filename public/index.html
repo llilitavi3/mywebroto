@@ -3,236 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoyalBet88 - Premium Gaming</title>
-    <!-- עיצוב נקי ומודרני מותאם לניידים בסגנון אתרי הימורים מובילים -->
+    <title>RoyalBet88 - The Kingdom of Winners</title>
+    
+    <!-- קישור לקובץ העיצוב המרכזי והגלובלי בשורש האתר -->
+    <link rel="stylesheet" href="css/global-theme.css">
+    
     <style>
-        :root {
-            --bg-color: #1a1d24;
-            --card-bg: #222630;
-            --accent-color: #ffb703;
-            --text-color: #ffffff;
-            --text-muted: #9ba3b2;
-        }
-        [dir="ltr"] {
-            --direction: ltr;
-        }
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-        header {
-            background-color: var(--card-bg);
-            padding: 15px 20px;
+        /* הגדרות עיצוב ייחודיות אך ורק לדף הבית המרכזי */
+        .hero-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #2d3342;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-        nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 500;
-        }
-        nav a:hover, nav a.active {
-            color: var(--accent-color);
-        }
-        .lang-selector {
-            background-color: #1a1d24;
-            color: #fff;
-            border: 1px solid #454f63;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        /* סליידר מרכזי באנר */
-        .hero-slider {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(180deg, #222630 0%, #1a1d24 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .slide-content h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-        /* גריד משחקי קזינו */
-        .main-container {
-            padding: 30px 20px;
+            padding: 40px 20px;
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 80px auto 20px auto;
+            gap: 30px;
         }
-        .section-title {
-            font-size: 22px;
-            margin-bottom: 20px;
-            border-right: 4px solid var(--accent-color);
-            padding-right: 10px;
-        }
-        html[lang="en"] .section-title {
-            border-right: none;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 10px;
-            padding-right: 0;
-        }
-        .casino-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-        .game-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            cursor: pointer;
-        }
-        .game-card:hover {
-            transform: translateY(-5px);
-        }
-        .game-thumb {
-            width: 100%;
-            height: 140px;
-            background-color: #2d3342;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-        }
-        .game-info {
-            padding: 15px;
+        .hero-banner-left {
+            flex: 1;
+            background: rgba(34, 38, 48, 0.8);
+            border: 2px solid #ffb703;
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .hero-banner-left img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .hero-content-right {
+            flex: 1.2;
+            text-align: right;
+        }
+        .hero-content-right h1 {
+            font-size: 38px;
+            color: #ffb703;
+            margin-bottom: 15px;
             font-weight: bold;
         }
+        .hero-content-right p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ffffff;
+        }
+        .action-btn {
+            background-color: #ffb703;
+            color: #1a1d24;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+        .action-btn:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 
-    <!-- תפריט ניווט עליון -->
-    <header>
-        <div class="logo">RoyalBet88</div>
-        <nav id="main-nav">
-            <a href="index.html" class="active" data-key="nav_home">קזינו</a>
-            <a href="sports.html" data-key="nav_sports">ספורט</a>
-            <a href="login.html" data-key="nav_login">התחברות</a>
-        </nav>
-        <div>
-            <!-- תפריט בחירת שפות ידני -->
-            <select class="lang-selector" id="langSelect" onchange="changeLanguage(this.value)">
-                <option value="he">עברית</option>
-                <option value="en">English</option>
-            </select>
+    <!-- אזור הבאנרים המלכותי של דף הבית -->
+    <section class="hero-section">
+        <!-- הבאנר השמאלי (תמונת הילדה והסטטוס) -->
+        <div class="hero-banner-left">
+            <img src="img/royal-girl.jpg" alt="RoyalBet88">
+            <h3 style="color: #ffb703;" data-strapi-key="banner_status_title">האתר נמצא בשלבי הקמה מתקדמים</h3>
+            <p style="color: #9ba3b2; font-size: 14px;" data-strapi-key="banner_status_text">אנחנו עובדים במרץ כדי להביא לכם חוויה מושלמת. נשמח לראותכם בקרוב!</p>
         </div>
-    </header>
 
-    <!-- סליידר/באנר מרכזי פרומו -->
-    <section class="hero-slider">
-        <div class="slide-content">
-            <h1 id="hero-title" data-key="hero_title">חוויית קזינו יוקרתית</h1>
-            <p id="hero-desc" data-key="hero_desc">המשחקים המובילים בעולם מחכים לך כאן</p>
+        <!-- התוכן הימני המרכזי -->
+        <div class="hero-content-right">
+            <h1 data-strapi-key="hero_title">שדרג את המשחק שלך למעמד מלכותי</h1>
+            <p data-strapi-key="hero_description">ברוכים הבאים לממלכת הווינרים. כנסו לארנה היוקרתית שבה חוויית פרימיום פוגשת ריגוש טהור. היחסים האטרקטיביים ביותר, משיכות וטעינות אוטומטיות מהירות ושירות מלכותי מסביב לשעון 24/7.</p>
+            <button class="action-btn" onclick="window.location.href='sport/index.html'" data-strapi-key="btn_play_now">שחק עכשיו</button>
         </div>
     </section>
 
-    <!-- אזור תצוגת משחקי קזינו -->
-    <main class="main-container">
-        <div class="section-title" data-key="sec_casino">משחקי קזינו פופולריים</div>
-        
-        <div class="casino-grid">
-            <div class="game-card" onclick="launchCasinoGame('slots_1')">
-                <div class="game-thumb">🎰</div>
-                <div class="game-info" data-key="game_slots">מכונות סלוטים</div>
-            </div>
-            <div class="game-card" onclick="launchCasinoGame('roulette_live')">
-                <div class="game-thumb">🎡</div>
-                <div class="game-info" data-key="game_roulette">רולטה לייב</div>
-            </div>
-            <div class="game-card" onclick="launchCasinoGame('blackjack')">
-                <div class="game-thumb">🃏</div>
-                <div class="game-info" data-key="game_bj">בלאקג'ק</div>
-            </div>
-        </div>
-    </main>
-
-    <!-- סקריפט ניהול שפות (i18n) אוטומטי וידני -->
-    <script>
-        // מילון מונחים מקומי לתרגום אלמנטים סטטיים באתר
-        const translations = {
-            he: {
-                nav_home: "קזינו",
-                nav_sports: "ספורט",
-                nav_login: "התחברות",
-                hero_title: "חוויית קזינו יוקרתית",
-                hero_desc: "המשחקים המובילים בעולם מחכים לך כאן",
-                sec_casino: "משחקי קזינו פופולריים",
-                game_slots: "מכונות סלוטים",
-                game_roulette: "רולטה לייב",
-                game_bj: "בלאקג'ק"
-            },
-            en: {
-                nav_home: "Casino",
-                nav_sports: "Sportsbook",
-                nav_login: "Login",
-                hero_title: "Luxury Casino Experience",
-                hero_desc: "The world's top games are waiting for you",
-                sec_casino: "Popular Casino Games",
-                game_slots: "Slot Machines",
-                game_roulette: "Live Roulette",
-                game_bj: "Blackjack"
-            }
-        };
-
-        // פונקציה ליישום השפה הנבחרת על ה-HTML
-        function applyLanguage(lang) {
-            document.documentElement.lang = lang;
-            document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
-            
-            // תרגום כל האלמנטים המכילים את המפתח data-key
-            document.querySelectorAll('[data-key]').forEach(element => {
-                const key = element.getAttribute('data-key');
-                if (translations[lang] && translations[lang][key]) {
-                    element.textContent = translations[lang][key];
-                }
-            });
-            
-            document.getElementById('langSelect').value = lang;
-        }
-
-        // פונקציה להחלפת שפה ידנית מהתפריט
-        function changeLanguage(lang) {
-            localStorage.setItem('selectedLang', lang);
-            applyLanguage(lang);
-        }
-
-        // אתחול האתר: בדיקת זיכרון מקומי או שפת מכשיר אוטומטית
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('selectedLang');
-            if (savedLang) {
-                applyLanguage(savedLang);
-            } else {
-                // זיהוי אוטומטי לפי שפת דפדפן/טלפון
-                const browserLang = navigator.language.substring(0, 2);
-                const defaultLang = (browserLang === 'he') ? 'he' : 'en';
-                applyLanguage(defaultLang);
-            }
-        });
-
-        // פונקציה לפתיחת משחקי קזינו (ייעשה מול ה-API של Strapi בהמשך)
-        function launchCasinoGame(gameId) {
-            alert("מריץ משחק: " + gameId + "\nבשלב הבא נחבר את זה ל-API המאובטח של ה-iFrame בשרת.");
-        }
-    </script>
+    <!-- טעינת קובץ האפליקציה המרכזי והגלובלי בשורש האתר -->
+    <!-- קובץ זה יזריק אוטומטית את ה-Header העליון ותפריט הצד שלכם -->
+    <script src="js/global-app.js"></script>
 </body>
 </html>
